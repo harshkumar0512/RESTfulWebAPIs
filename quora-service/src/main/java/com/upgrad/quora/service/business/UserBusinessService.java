@@ -5,6 +5,7 @@ import com.upgrad.quora.service.entity.UserAuthTokenEntity;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthenticationFailedException;
 import com.upgrad.quora.service.exception.SignOutRestrictedException;
+import com.upgrad.quora.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,13 +15,29 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Service
-public class AuthenticationBusinessService {
-
+public class UserBusinessService {
     @Autowired
     private Userdao userdao;
 
     @Autowired
     private PasswordCryptographyProvider passwordCryptographyProvider;
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public UserEntity signUp(UserEntity userEntity) throws SignUpRestrictedException {
+        if (userdao.getUserByUserName(userEntity.getUserName()) != null) {
+            throw new SignUpRestrictedException("SGR-001","Try any other Username, this Username has already been taken");
+        }
+
+        if (userdao.getUserByEmail(userEntity.getEmail()) != null) {
+            throw new SignUpRestrictedException("SGR-002","This user has already been registered, try with any other emailId");
+        }
+
+        String[] encryptedPasswordArray = passwordCryptographyProvider.encrypt(userEntity.getPassword());
+        userEntity.setSalt(encryptedPasswordArray[0]);
+        userEntity.setPassword(encryptedPasswordArray[1]);
+
+        return userdao.createUser(userEntity);
+    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthTokenEntity authenticateUser(final String userName, final String password) throws AuthenticationFailedException {
@@ -66,5 +83,4 @@ public class AuthenticationBusinessService {
         userAuthTokenEntity.setLogoutAt(logoutTime);
         return userAuthTokenEntity;
     }
-
 }

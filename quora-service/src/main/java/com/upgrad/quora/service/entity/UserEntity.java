@@ -24,7 +24,8 @@ dob VARCHAR(30), role VARCHAR(30),contactNumber VARCHAR(30), PRIMARY KEY (id));
 @Table(name = "USERS")
 @NamedQueries({
        @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email = :email"),
-       @NamedQuery(name = "userByuserName", query = "select u from UserEntity u where u.userName = :userName")
+       @NamedQuery(name = "userByUsername", query = "select u from UserEntity u where u.userName = :userName"),
+        @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid")
 })
 public class UserEntity implements Serializable {
 
