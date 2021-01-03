@@ -12,13 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-/*
-USERS(id SERIAL, uuid VARCHAR(200) NOT NULL ,firstName VARCHAR(30) NOT NULL ,
-lastName VARCHAR(30) NOT NULL ,userName VARCHAR(30) UNIQUE NOT NULL,
-email VARCHAR(50) UNIQUE NOT NULL ,password VARCHAR(255) NOT NULL,
-salt VARCHAR(200) NOT NULL ,country VARCHAR(30) ,aboutMe VARCHAR(50),
-dob VARCHAR(30), role VARCHAR(30),contactNumber VARCHAR(30), PRIMARY KEY (id));
- */
 
 @Entity
 @Table(name = "USERS")

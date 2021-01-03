@@ -1,4 +1,4 @@
-/*package com.upgrad.quora.api.controller;
+package com.upgrad.quora.api.controller;
 
 
 import org.junit.Test;
@@ -43,5 +43,12 @@ public class CommonControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("USR-001"));
     }
+
+    // This test cases passes when there is a mismatch in the uuid of the user and the uuid of the user object stored in the UserAuthToken object
+    @Test
+    public void userUuidMismatch() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/userprofile/database_uuid2").header("authorization", "database_accesstoken"))
+                .andExpect(status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value("USR-002"));
+    }
 }
-*/

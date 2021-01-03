@@ -120,16 +120,3 @@ public class UserAuthTokenEntity implements Serializable {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
-
-/*
-id , uuid , user_id , access_token , expires_at , login_at, logout_at
-
-ID BIGSERIAL PRIMARY KEY,
-	uuid VARCHAR(200) NOT NULL,
-	USER_ID INTEGER NOT NULL,
-	ACCESS_TOKEN VARCHAR(500) NOT NULL,
-	EXPIRES_AT TIMESTAMP NOT NULL,
-	LOGIN_AT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	LOGOUT_AT TIMESTAMP NULL
-
- */

@@ -30,7 +30,15 @@ public class UserController {
     @Autowired
     private UserBusinessService userBusinessService;
 
-
+    /**
+     * This method receives SignupUserRequest.
+     * This method is used to create a new user and store in the user's table.
+     */
+    /**
+     * @param signupUserRequest - SignupUserRequest
+     * @return -  ResponseEntity object
+     * @exception - SignUpRestrictedException
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/user/signup", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignupUserResponse> signupUser(final SignupUserRequest signupUserRequest) throws SignUpRestrictedException {
         final UserEntity userEntity = new UserEntity();
@@ -54,13 +62,25 @@ public class UserController {
         return new ResponseEntity<SignupUserResponse>(signupUserResponse, HttpStatus.CREATED);
     }
 
+    /**
+     * This method receives accessToken passed in the authorization header.
+     * This method is verifies the accessToken, and sign's in the user and create a UserAuthTokenEntity object in the user_auth table.
+     */
+    /**
+     * @param authorization - accessToken received from the request header
+     * @return -  ResponseEntity object
+     * @exception - AuthenticationFailedException
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/user/signin", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SigninResponse> loginUser(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
         //Eg: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
         //above is a sample encoded text where the username is "username" and password is "password" seperated by a ":"
+        /*
         String[] authorizationArray = authorization.split("Basic ");
         byte[] decodedByteArray = Base64.getDecoder().decode(authorizationArray[1]);
         String decodedText = new String(decodedByteArray);
+         */
+        String decodedText = userBusinessService.getDecodedAuthorizationToken(authorization);
         String[] decodedTextArray = decodedText.split(":");
 
         UserAuthTokenEntity userAuthToken = userBusinessService.authenticateUser(decodedTextArray[0],decodedTextArray[1]);
@@ -75,6 +95,15 @@ public class UserController {
         return new ResponseEntity<SigninResponse>(signinResponse, httpHeaders, HttpStatus.OK);
     }
 
+    /**
+     * This method receives accessToken passed in the authorization header.
+     * This method is verifies the accessToken, and sign's out the user.
+     */
+    /**
+     * @param authorization - accessToken received from the request header
+     * @return -  ResponseEntity object
+     * @exception - SignOutRestrictedException
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/user/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignoutResponse> signoutUser(@RequestHeader("authorization") final String authorization) throws SignOutRestrictedException {
         UserAuthTokenEntity userAuthToken = userBusinessService.signoutUser(authorization);
