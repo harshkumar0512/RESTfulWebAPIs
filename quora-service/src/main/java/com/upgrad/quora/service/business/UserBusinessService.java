@@ -138,6 +138,6 @@ public class UserBusinessService {
             String decodedText = new String(decodedByteArray);
             return decodedText;
         }
-        throw new AuthenticationFailedException("ATH-001","The authentication format is incorrect. The correct format is Basic token.");
+        throw new AuthenticationFailedException("ATH-001","The authentication format is incorrect. The correct format is Basic username:password.");
     }
 }
