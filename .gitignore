@@ -36,5 +36,5 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-Trello_quora.iml
+*.iml
 .idea
