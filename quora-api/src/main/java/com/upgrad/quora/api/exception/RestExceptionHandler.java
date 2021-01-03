@@ -16,7 +16,7 @@ public class RestExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse()
                                                 .code(exc.getCode())
                                                 .message(exc.getErrorMessage());
-        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
@@ -24,7 +24,7 @@ public class RestExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse()
                                                 .code(exc.getCode())
                                                 .message(exc.getErrorMessage());
-        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(SignOutRestrictedException.class)
@@ -32,7 +32,7 @@ public class RestExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse()
                                                 .code(exc.getCode())
                                                 .message(exc.getErrorMessage());
-        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
@@ -40,7 +40,7 @@ public class RestExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse()
                                                 .code(exc.getCode())
                                                 .message(exc.getErrorMessage());
-        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
