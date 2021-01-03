@@ -1,4 +1,4 @@
-/*package com.upgrad.quora.api.controller;
+package com.upgrad.quora.api.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class UserControllerTest {
     //This test case passes when you signup with a username that already exists in the database.
     @Test
     public void signupWithRepeatedUserName() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/user/signup?firstName=a&lastName=a&userName=database_username&emailAddress=a&password=a&country=a&aboutMe=a&dob=a&contactNumber=a").contentType(MediaType.APPLICATION_JSON_UTF8))
+        mvc.perform(MockMvcRequestBuilders.post("/user/signup?firstName=a&lastName=a&userName=database_newusername&emailAddress=a&password=a&country=a&aboutMe=a&dob=a&contactNumber=a").contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isConflict())
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-001"));
     }
@@ -37,6 +37,22 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-002"));
     }
 
+    //This test case passes when you try to login using userName that does not exist in database
+    @Test
+    public void signinWithNonexistingUsername() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/user/signin").header("authorization","Basic QUoxOmppdGVzaGExMjM=").contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict())
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATH-001"));
+    }
+
+    //This test case passes when you try to login using password that does not exist in database
+    @Test
+    public void signinWithNonexistingPassword() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/user/signin").header("authorization","Basic QUoxNjU6aml0ZXNoYTE=").contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isConflict())
+                .andExpect(MockMvcResultMatchers.jsonPath("code").value("ATH-002"));
+    }
+
 
     //This test case passes when you try to signout but the JWT token entered does not exist in the database.
     @Test
@@ -46,4 +62,3 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("code").value("SGR-001"));
     }
 }
-*/
