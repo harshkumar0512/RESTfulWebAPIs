@@ -1,5 +1,6 @@
 package com.upgrad.quora.service.entity;
 
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,14 +11,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 @NamedQueries({
-        @NamedQuery(
-                name = "userByUserName",
-                query = "select u from UserEntity u where u.userName=:userName"),
-        @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email=:email"),
-        @NamedQuery(name = "userByUserId", query = "select u from UserEntity u where u.uuid=:userId")
+        @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email = :email"),
+        @NamedQuery(name = "userByUsername", query = "select u from UserEntity u where u.userName = :userName"),
+        @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid")
 })
 public class UserEntity implements Serializable {
 
@@ -27,37 +27,34 @@ public class UserEntity implements Serializable {
     private Integer id;
 
     @Column(name = "uuid")
-    @Size(max = 200)
     @NotNull
+    @Size(max = 200)
     private String uuid;
 
     @Column(name = "firstname")
     @NotNull
-    @Size(max = 30)
+    @Size(max = 200)
     private String firstName;
 
     @Column(name = "lastname")
     @NotNull
-    @Size(max = 30)
+    @Size(max = 200)
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     @NotNull
-    @Size(max = 30)
+    @Size(max = 200)
     private String userName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotNull
-    @Size(max = 50)
+    @Size(max = 200)
     private String email;
 
-    //@ToStringExclude
     @Column(name = "password")
     @NotNull
-    @Size(max = 255)
     private String password;
 
-    // @ToStringExclude
     @Column(name = "salt")
     @NotNull
     @Size(max = 200)
@@ -201,4 +198,5 @@ public class UserEntity implements Serializable {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
 }

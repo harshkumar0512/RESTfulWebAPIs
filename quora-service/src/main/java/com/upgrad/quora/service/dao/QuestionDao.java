@@ -12,7 +12,8 @@ import java.util.List;
 @Repository
 public class QuestionDao {
 
-    @PersistenceContext private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Persists a new Question entity in the Database

@@ -26,7 +26,8 @@ public class CommonService {
      * @throws UserNotFoundException
      */
     public UserEntity getUserByUuid(final String userUuid) throws UserNotFoundException {
-        UserEntity userEntity = userDao.getUserById(userUuid);
+
+        UserEntity userEntity = userDao.getUserByUuid(userUuid);
         if (userEntity == null) {
             // handle exception when null object is returned from userDao
             throw new UserNotFoundException("USR-001", "User with entered uuid does not exist");

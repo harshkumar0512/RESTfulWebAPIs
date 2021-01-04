@@ -21,11 +21,14 @@ import java.util.UUID;
 @Service
 public class QuestionService {
 
-    @Autowired private QuestionDao questionDao;
+    @Autowired
+    private QuestionDao questionDao;
 
-    @Autowired private UserAuthDao userAuthDao;
+    @Autowired
+    private UserAuthDao userAuthDao;
 
-    @Autowired private UserDao userDao;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Business logic to authorize user who wants to create question and create a question
@@ -147,7 +150,7 @@ public class QuestionService {
                     "ATHR-002",
                     "User is signed out.Sign in first to get all questions posted by a specific user");
         }
-        UserEntity user = userDao.getUserById(userId);
+        UserEntity user = userDao.getUserByUuid(userId);
         if (user == null) {
             throw new UserNotFoundException(
                     "USR-001", "User with entered uuid whose question details are to be seen does not exist");
