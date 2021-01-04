@@ -13,6 +13,7 @@ public class AnswerDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
     /**
      * Create answers in the DB
      *
