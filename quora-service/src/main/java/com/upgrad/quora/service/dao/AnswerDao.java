@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public class AnswerDao {
 
-    @PersistenceContext private EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
     /**
      * Create answers in the DB
      *

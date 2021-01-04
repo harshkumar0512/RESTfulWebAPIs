@@ -21,11 +21,14 @@ import java.util.UUID;
 @Service
 public class AnswerService {
 
-    @Autowired private UserAuthDao userAuthDao;
+    @Autowired
+    private UserAuthDao userAuthDao;
 
-    @Autowired private AnswerDao answerDao;
+    @Autowired
+    private AnswerDao answerDao;
 
-    @Autowired private QuestionDao questionDao;
+    @Autowired
+    private QuestionDao questionDao;
     /**
      * Add answer into the database
      *
